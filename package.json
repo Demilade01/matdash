@@ -10,17 +10,19 @@
   },
   "dependencies": {
     "@iconify/react": "4.1.1",
+    "@supabase/supabase-js": "^2.49.4",
     "@tabler/icons-react": "3.5.0",
     "flowbite": "2.3.0",
     "flowbite-react": "0.10.1",
     "lodash": "4.17.21",
     "moment": "2.29.4",
     "next": "14.2.4",
+    "next-auth": "^4.24.11",
     "react": "18",
     "react-apexcharts": "1.4.1",
     "react-dom": "18",
-    "simplebar-react": "3.2.5",
-    "sharp": "0.32.6"
+    "sharp": "0.32.6",
+    "simplebar-react": "3.2.5"
   },
   "devDependencies": {
     "@types/node": "20",
