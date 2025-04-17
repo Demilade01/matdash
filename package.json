@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@iconify/react": "4.1.1",
+    "@supabase/ssr": "^0.6.1",
     "@supabase/supabase-js": "^2.49.4",
     "@tabler/icons-react": "3.5.0",
     "flowbite": "2.3.0",
