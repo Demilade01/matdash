@@ -65,11 +65,46 @@ export const authOptions: NextAuthOptions = {
     strategy: 'jwt',
     maxAge: 30 * 24 * 60 * 60,
   },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.email = user.email;
+        token.lasUpdated = new Date().toISOString();
+      }
+      return token;
+    },
+    async session({ session, token }): Promise<CustomSession> {
+      return {
+        ...session,
+        user : {
+          id: token.userId as string,
+          email: token.email as string,
+        },
+      };
+    },
+  },
   pages: {
     signIn: '/auth/signin',
     error: '/auth/error'
   },
-  secret: process.env.NEXTAUTH_SECRET
+  events: {
+    async signIn({ user}) {
+      console.log('User signed in:', {
+        userId: user.id,
+        email: user.email,
+        timestamp: new Date().toISOString(),
+      });
+    },
+
+    async signOut({ token }) {
+      if(token?.userId) {
+        await supabase.auth.signOut()
+      }
+    }
+  },
+  secret: process.env.NEXTAUTH_SECRET,
+  debug: process.env.NODE_ENV === 'development',
 };
 
 const authHandlers = {
@@ -100,9 +135,18 @@ const authHandlers = {
       email,
       password,
     })
-  }
+  },
+
 
 }
+const handleAuth = async (req: Request, res: Response) => {
+  try {
+    return await NextAuth(authOptions) (req, res);
+  } catch (error) {
+    console.error('Error in auth handler:', error);
+    throw error
+  }
+}
 
-const handler = NextAuth(authOptions);
-export { handler as GET, handler as POST };
+export const GET = handleAuth;
+export const POST = handleAuth;
