@@ -69,7 +69,7 @@ const SidebarContent: MenuItem[] = [
         name: "Login",
         icon: "solar:login-2-linear",
         id: uniqueId(),
-        url: "/auth/login",
+        url: "/auth/signin",
       },
       {
         name: "Register",
