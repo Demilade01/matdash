@@ -5,8 +5,8 @@
       <change beforePath="$PROJECT_DIR$/src/app/(DashboardLayout)/layout/vertical/header/Profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(DashboardLayout)/layout/vertical/header/Profile.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/(DashboardLayout)/layout/vertical/sidebar/Sidebaritems.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(DashboardLayout)/layout/vertical/sidebar/Sidebaritems.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/api/auth/[...nextauth]/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/auth/[...nextauth]/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/auth/login/page.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/auth/register/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/register/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/auth/signin/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/auth/signup/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/signup/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/supabase/middleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/supabase/middleware.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

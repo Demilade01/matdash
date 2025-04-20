@@ -66,16 +66,16 @@ const SidebarContent: MenuItem[] = [
     heading: "AUTH",
     children: [
       {
-        name: "Login",
+        name: "SignIn",
         icon: "solar:login-2-linear",
         id: uniqueId(),
         url: "/auth/signin",
       },
       {
-        name: "Register",
+        name: "SignUp",
         icon: "solar:shield-user-outline",
         id: uniqueId(),
-        url: "/auth/register",
+        url: "/auth/signup",
       },
     ],
   },

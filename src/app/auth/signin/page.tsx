@@ -1,6 +1,6 @@
 "use client"
 import FullLogo from "@/app/(DashboardLayout)/layout/shared/logo/FullLogo";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import AuthLogin from "../authforms/AuthLogin";
 
@@ -11,7 +11,7 @@ const gradientStyle = {
   height: "100vh",
 };
 
-const BoxedLogin = () => {
+const SignIn = () => {
   return (
     <div style={gradientStyle} className="relative overflow-hidden h-screen">
       <div className="flex h-full justify-center items-center px-4">
@@ -24,7 +24,7 @@ const BoxedLogin = () => {
             <AuthLogin />
             <div className="flex gap-2 text-base text-ld font-medium mt-6 items-center justify-center">
               <p>New to Matdash?</p>
-              <Link href="/auth/register" className="text-primary text-sm font-medium">
+              <Link href="/auth/signup" className="text-primary text-sm font-medium">
                 Create an account
               </Link>
             </div>
@@ -48,4 +48,4 @@ const BoxedLogin = () => {
   );
 };
 
-export default BoxedLogin;
+export default SignIn;
