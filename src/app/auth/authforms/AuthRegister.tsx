@@ -1,18 +1,52 @@
+'use client'
+
 import { Button, Label, TextInput } from "flowbite-react";
-import Link from "next/link";
-import React from "react";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 
 const AuthRegister = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, seterror] = useState<string | null>(null);
+    const router = useRouter();
+    const [name, setName] = useState('');
+
+    const handleSubmit = async (e: React.FormEvent) => {
+      e.preventDefault();
+
+      try {
+        const result = await signIn('credentials', {
+          name,
+          email,
+          password,
+          redirect: false,
+          mode: 'signup',
+        });
+
+        if (result?.error) {
+          seterror(result.error);
+        } else {
+          router.refresh();
+          router.push('/');
+        }
+      } catch (error) {
+        seterror('An unexpected error occurred 😥');
+      }
+    }
   return (
     <>
-      <form>
-        <div className="mb-4">
+      <form onSubmit={handleSubmit}>
+      <div className="mb-4">
           <div className="mb-2 block">
             <Label htmlFor="name" value="Name" />
           </div>
           <TextInput
             id="name"
             type="text"
+            placeholder="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             sizing="md"
             className="form-control form-rounded-xl"
           />
@@ -22,9 +56,12 @@ const AuthRegister = () => {
             <Label htmlFor="emadd" value="Email Address" />
           </div>
           <TextInput
-            id="emadd"
-            type="text"
+            id="email"
+            type="email"
             sizing="md"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="form-control form-rounded-xl"
           />
         </div>
@@ -37,10 +74,12 @@ const AuthRegister = () => {
             type="password"
             sizing="md"
             className="form-control form-rounded-xl"
+            onChange={(e) => setPassword(e.target.value)}
+            required
           />
-        </div> 
-        <Button color={'primary'} className="w-full">Sign Up</Button> 
-        
+        </div>
+        <Button color={'primary'} className="w-full" type="submit">Sign Up</Button>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
       </form>
     </>
   )

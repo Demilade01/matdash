@@ -1,6 +1,6 @@
 "use client"
 import FullLogo from "@/app/(DashboardLayout)/layout/shared/logo/FullLogo";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import AuthRegister from "../authforms/AuthRegister";
 
@@ -12,7 +12,7 @@ const gradientStyle = {
   overflow: "hidden",
 };
 
-const BoxedRegister = () => {
+const SignUp = () => {
   return (
     <div style={gradientStyle} className="relative overflow-hidden h-screen">
       <div className="flex h-full justify-center items-center px-4">
@@ -51,4 +51,4 @@ const BoxedRegister = () => {
   );
 };
 
-export default BoxedRegister;
+export default SignUp;

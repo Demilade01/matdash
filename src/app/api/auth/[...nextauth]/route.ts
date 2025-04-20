@@ -1,6 +1,6 @@
 
 import { createClient } from '@/utils/supabase/client';
-import { times } from 'lodash';
+import { createServerSupabase } from '@/utils/supabase/server';
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
@@ -12,37 +12,53 @@ interface CustomUser {
 
 interface CustomSession {
   user: {
+    name: string;
     id: string;
     email: string;
   };
   expires: string;
 }
 
-const supabase = createClient()
+
+
 
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
+      name: 'Credentials',
+      id: 'credentials',
       credentials: {
+        name: { label: "Name", type: "text", placeholder: 'Enter your name (if required)' },
         email: { label: "Email", type: "email", placeholder: 'Enter your Email' },
         password: { label: "Password", type: "password", placeholder: 'Enter your password (if required)', },
         mode: { label: "Mode", type: "text", placeholder: 'signin, signup, or resetpassword', }
       },
       async authorize(credentials): Promise<CustomUser | null> {
         try {
-          const { email, password, mode } = credentials ?? {};
+          const name = credentials?.name;
+          const email = credentials?.email;
+          const password = credentials?.password;
+          const mode  = credentials?.mode;
           const lowerMode = mode?.toLowerCase();
 
-          if(!email && !password) {
+          if( !email && !password) {
             throw new Error('Email and password are required.');
           }
 
           const user =
             lowerMode === 'signup'
-              ? email && password ? await authHandlers.handleSignUp(email, password) : null
+              ? email && password
+                ? await authHandlers.handleSignUp(email, password, name ?? '')
+                : null
               : lowerMode === 'signin'
-              ? email && password ? await authHandlers.handleSignIn(email, password) : null
-              : null;
+                ? email && password
+                  ? await authHandlers.handleSignIn(email, password)
+                  : null
+                : null;
+
+          if (!user?.id) {
+            throw new Error('Signup successful. Please verify your email before signing in.');
+}
 
           return {
             id: user?.id ?? '',
@@ -52,6 +68,7 @@ export const authOptions: NextAuthOptions = {
         } catch (error) {
           console.error('Error in authorize:', {
             error,
+            name: credentials?.name,
             email: credentials?.email,
             mode: credentials?.mode,
             timestamp: new Date().toISOString(),
@@ -70,7 +87,8 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.id = user.id;
         token.email = user.email;
-        token.lasUpdated = new Date().toISOString();
+        token.name = user.name;
+        token.lastUpdated = new Date().toISOString();
       }
       return token;
     },
@@ -78,9 +96,11 @@ export const authOptions: NextAuthOptions = {
       return {
         ...session,
         user : {
-          id: token.userId as string,
+          id: token.id as string,
           email: token.email as string,
+          name: token.name as string,
         },
+        expires: token.exp as string,
       };
     },
   },
@@ -98,22 +118,27 @@ export const authOptions: NextAuthOptions = {
     },
 
     async signOut({ token }) {
+      const supabase = createServerSupabase();
       if(token?.userId) {
         await supabase.auth.signOut()
       }
-    }
+    },
   },
   secret: process.env.NEXTAUTH_SECRET,
   debug: process.env.NODE_ENV === 'development',
 };
 
 const authHandlers = {
-  async handleSignUp(email: string, password: string) {
+  async handleSignUp( email: string, password: string, name: string) {
+    const supabase = createServerSupabase();
     const { data, error } = await supabase.auth.signUp ({
       email,
       password,
       options: {
-        emailRedirectTo: `${process.env.NEXTAUTH_URL}`,
+        emailRedirectTo: `${process.env.NEXTAUTH_URL}/auth/signin`,
+        data:{
+          name: name ?? '',
+        }
       },
     });
 
@@ -127,14 +152,24 @@ const authHandlers = {
       );
     }
 
+    await supabase.from('profiles').insert({
+      id: data.user.id,
+      name,
+      email,
+    });
+
     return data.user;
   },
 
   async handleSignIn(email: string, password: string) {
+    const supabase = createServerSupabase();
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     })
+    if (error) throw new Error(error.message);
+    if (!data.user) throw new Error('No user found');
+    return data.user;
   },
 
 
