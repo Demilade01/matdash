@@ -5,6 +5,7 @@ import 'simplebar-react/dist/simplebar.min.css';
 import { Flowbite, ThemeModeScript } from "flowbite-react";
 import customTheme from "@/utils/theme/custom-theme";
 import "./css/globals.css";
+import { SessionProvider } from "next-auth/react";
 
 const manrope = Manrope({ subsets: ["latin"] });
 
