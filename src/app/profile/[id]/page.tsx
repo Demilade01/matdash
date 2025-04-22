@@ -4,6 +4,7 @@ import { createServerSupabase } from "@/utils/supabase/server";
 import { notFound } from "next/navigation";
 import { Button } from "flowbite-react";
 import UploadAvatar from "@/app/components/profile/UploadAvatar";
+import ProfileCard from "@/app/components/profile/ProfileCard";
 
 declare module "next-auth" {
   interface Session {
@@ -38,29 +39,7 @@ const  ProfilePage = async ({ params }: { params: { id: string } }) => {
   }
 
   return (
-    <section className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12">
-      <div className="bg-white shadow-xl rounded-2xl w-full max-w-md p-6 text-center relative">
-        {/* Avatar */}
-          <UploadAvatar userId={profile.id} initialUrl={profile.avatar_url} />
-
-        {/* User Info */}
-        <h2 className="text-2xl font-semibold text-gray-800">{profile.name || 'User'}</h2>
-        <p className="text-gray-500 text-sm">{profile.email}</p>
-
-        {/* Divider */}
-        <div className="my-6 border-t" />
-
-        {/* Actions */}
-        <div className="flex flex-col gap-2">
-          <Button className="bg-primary text-white px-4 py-2 rounded hover:bg-primary-dark transition cursor-pointer">
-            Edit Profile
-          </Button>
-          <Button className="text-red-500 border cursor-pointer border-red-200 px-2 py-2 rounded hover:bg-red-50 transition" href="/auth/signin">
-            Logout
-          </Button>
-        </div>
-      </div>
-    </section>
+      <ProfileCard profile={profile} />
   );
 }
 
