@@ -1,10 +1,10 @@
 import { getServerSession, Session } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { createServerSupabase } from "@/utils/supabase/server";
 import { notFound } from "next/navigation";
 import { Button } from "flowbite-react";
 import UploadAvatar from "@/app/components/profile/UploadAvatar";
 import ProfileCard from "@/app/components/profile/ProfileCard";
+import { authOptions } from "@/utils/authOptions/authOptions";
 
 declare module "next-auth" {
   interface Session {
