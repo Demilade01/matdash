@@ -34,6 +34,35 @@ const SidebarContent: MenuItem[] = [
     ],
   },
   {
+    heading: "GALLERY",
+    children: [
+      {
+        name: "My Gallery",
+        icon: "solar:gallery-linear",
+        id: uniqueId(),
+        url: "/gallery",
+      },
+      {
+        name: "My Tasks",
+        icon: "solar:checklist-linear",
+        id: uniqueId(),
+        url: "/tasks",
+      },
+      {
+        name: "My Wallets",
+        icon: "solar:wallet-outline",
+        id: uniqueId(),
+        url: "/wallets",
+      },
+      {
+        name: "Notifications",
+        icon: "solar:bell-outline",
+        id: uniqueId(),
+        url: "/notifications",
+      },
+    ],
+  },
+  {
     heading: "UTILITIES",
     children: [
       {
@@ -66,16 +95,22 @@ const SidebarContent: MenuItem[] = [
     heading: "AUTH",
     children: [
       {
-        name: "SignIn",
+        name: "Sign In",
         icon: "solar:login-2-linear",
         id: uniqueId(),
         url: "/auth/signin",
       },
       {
-        name: "SignUp",
+        name: "Sign Up",
         icon: "solar:shield-user-outline",
         id: uniqueId(),
         url: "/auth/signup",
+      },
+      {
+        name: "Logout",
+        icon: "solar:logout-outline",
+        id: uniqueId(),
+        url: "/auth/signout",
       },
     ],
   },
