@@ -34,13 +34,13 @@ const SidebarContent: MenuItem[] = [
     ],
   },
   {
-    heading: "USER",
+    heading: "GALLERY",
     children: [
       {
-        name: "My Bookings",
-        icon: "solar:calendar-linear",
+        name: "My Gallery",
+        icon: "solar:gallery-linear",
         id: uniqueId(),
-        url: "/bookings",
+        url: "/gallery",
       },
       {
         name: "My Tasks",

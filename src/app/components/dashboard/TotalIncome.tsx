@@ -18,7 +18,7 @@ const TotalIncome = () => {
     chart: {
       id: "total-income",
       type: "area",
-      height: 60,
+      height: 70,
       sparkline: {
         enabled: true,
       },
@@ -65,9 +65,9 @@ const TotalIncome = () => {
         </div>
         <div className="flex">
           <div className="flex-1">
-            <p className="text-xl text-dark font-medium mb-2">$680</p>
+            <p className="text-xl text-dark font-medium mb-2">$100k</p>
             <Badge className={`bg-lightsuccess text-success `}>
-              +18%
+              +50%
             </Badge>
             <p className="text-success text-xs"></p>
           </div>
